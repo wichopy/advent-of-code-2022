@@ -3,9 +3,6 @@ import { readFile } from "./helpers.js";
 const file = await readFile("day2Input.txt");
 const array = file.toString().split("\n");
 
-// X: lose
-// Y: draw
-// Z: win
 const mapping: Record<string, choice> = {
   X: "rock",
   Y: "paper",
@@ -15,6 +12,12 @@ const mapping: Record<string, choice> = {
   C: "scissors",
 };
 
+const outcomeSecret : Record<string, outcomes> = {
+  X: 'lose',
+  Y: 'draw',
+  Z: 'win',
+}
+
 const choiceScoring = {
   scissors: 3,
   paper: 2,
@@ -22,6 +25,53 @@ const choiceScoring = {
 };
 
 type choice = "scissors" | "rock" | "paper";
+type outcomes = 'win' | 'draw' | 'lose';
+
+function lose(choice: choice) {
+  switch (choice) {
+    case 'rock':
+      return 'scissors'
+    case 'paper': 
+      return 'rock'
+    case 'scissors':
+      return 'paper'
+  }
+}
+
+function win(choice: choice) {
+  switch (choice) {
+    case 'paper':
+      return 'scissors'
+    case 'rock':
+      return 'paper'
+    case 'scissors':
+      return 'rock'
+  }
+}
+
+function decodeProperly(input: string[]) {
+  let score = 0
+  input.forEach(value => {
+    const [oppRaw, outcomeRaw] = value.split(" ") as string[]
+    const opp = mapping[oppRaw]
+    const outcome = outcomeSecret[outcomeRaw]
+    if (outcome === 'draw') {
+      score += choiceScoring[opp]
+      score += 3
+      return
+    }
+
+    if (outcome === 'lose') {
+      score += choiceScoring[lose(opp)]
+      return
+    }
+
+    score += 6
+    score += choiceScoring[win(opp)]
+  })
+
+  return score
+}
 
 function decode(input: string[]) {
   // console.log(input)
@@ -60,3 +110,11 @@ function decode(input: string[]) {
 }
 
 console.log(decode(array));
+
+const sample = [
+  'A Y',
+  'B X',
+  'C Z',
+]
+
+console.log(decodeProperly(array))

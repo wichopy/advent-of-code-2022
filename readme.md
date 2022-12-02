@@ -1,6 +1,6 @@
 ```
 npm i
 
-npx ts-node [filename]
+npx ts-node-esm [filename]
 
 ```
