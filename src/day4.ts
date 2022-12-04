@@ -1,4 +1,3 @@
-// import * as IntervalTree from '@davidisaaclee/interval-tree'
 import { readFile } from "./helpers.js";
 
 const path = "day4.txt";
