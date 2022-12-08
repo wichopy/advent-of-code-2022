@@ -149,9 +149,9 @@ function part1(input: string[]) {
   })
 
   let minDir = minHeap.pop()
-  while(minDir.totalSize + unusedSpace < MinSpaceNeeded) {
-    console.log('still too small, need a bigger dir', usedSpace - minDir.totalSize)
-    console.log(minDir.totalSize)
+  console.log(usedSpace - (TotalSize - MinSpaceNeeded))
+  while(minDir.totalSize < usedSpace - (TotalSize - MinSpaceNeeded)) {
+    console.log('still too small, need a bigger dir', minDir.totalSize)
     minDir = minHeap.pop()
   }
 
